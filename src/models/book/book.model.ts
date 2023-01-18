@@ -1,6 +1,17 @@
 import { Schema, model } from 'mongoose';
 import IBook from './book.interface';
-// import IEdition from './edition.interface';
+import IEdition from './edition.interface';
+
+const EditionSchema = new Schema<IEdition>({
+    version: {
+        type: Number,
+        required: true
+    },
+    publicationDate: {
+        type: Date,
+        required: true
+    }
+});
 
 const BookSchema = new Schema<IBook>({
     title: {
@@ -15,25 +26,10 @@ const BookSchema = new Schema<IBook>({
         type: String,
         required: true
     },
-    // editions: {
-    //     type: [] as IEdition[]
-    // },
-    // editions: [{
-    //     version: {
-    //         type: String,
-    //         required: true
-    //     },
-    //     publicationDate: {
-    //         type: Date,
-    //         required: true
-    //     }
-    // }],
-    // editions: [
-    //     new Schema({
-    //         version: Number,
-    //         publicationDate: Date
-    //     })
-    // ],
+    editions: {
+        type: [EditionSchema],
+        default: undefined
+    },
     author: {
         type: Schema.Types.ObjectId,
         ref: "Author",
