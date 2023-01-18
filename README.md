@@ -6,25 +6,25 @@ Create, read, update and delete Books and Authors with this basic REST API.
 url: /books/create  
 body:  
 {  
-    "title": "Book title",  
-    "summary": "Book summary",  
-    "ISBN": "Book ISBN number",  
-    "editions": [  
-        {  
-            version: 1,  
-            publicationDate: "2023-01-18T00:00:00.000Z"  
-        }  
-    ],  
-    "author": "63c53e26ab0a0541335797e9"  
+   "title": "Book title",  
+   "summary": "Book summary",  
+   "ISBN": "Book ISBN number",  
+   "editions": [  
+      {  
+         version: 1,  
+         publicationDate: "2023-01-18T00:00:00.000Z"  
+      }  
+   ],  
+   "author": "63c53e26ab0a0541335797e9"  
 }  
 
 =====================
 # POST read one Book
-url: /books
-body:
-{
-    "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)
-}
+url: /books  
+body:  
+{  
+    "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
+}  
 
 =====================
 # POST read all Books
@@ -34,30 +34,30 @@ body:
 ===================
 # POST update Book
 url: /books/update
-body:
-{
-    "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)
-
-    // all fields below are optional
-    "title": "Book title",        // String
-    "summary": "Book summary",    // String
-    "ISBN": "Book ISBN number",   // String
-    "editions": [
-    {
-        version: 1,                                 // Number
-        publicationDate: "2023-01-18T00:00:00.000Z" // Date
-    }
-    ],
-    "author": "63c53e26ab0a0541335797e9", // String (Author ObjectId)
+body:  
+{  
+   "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
+  
+   // all fields below are optional  
+   "title": "Book title",        // String  
+   "summary": "Book summary",    // String  
+   "ISBN": "Book ISBN number",   // String  
+   "editions": [  
+      {  
+         version: 1,                                 // Number  
+         publicationDate: "2023-01-18T00:00:00.000Z" // Date  
+      }  
+   ],  
+   "author": "63c53e26ab0a0541335797e9", // String (Author ObjectId)  
 }
 
 ==================
 # POST delete Book
-url: /books/delete
-body:
-{
-    "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)
-}
+url: /books/delete  
+body:  
+{  
+   "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
+}  
 
 
 ===================
@@ -84,49 +84,49 @@ url: /books/(ObjectId)/delete // Not yet implemented
 
 ===================
 # POST create Author
-url: /authors/create
-body:
-{
-    "firstName": "Author first name",           // String
-    "lastName": "Author first name",            // String
-    "dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date
-    "dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date
-}
+url: /authors/create  
+body:  
+{  
+   "firstName": "Author first name",           // String  
+   "lastName": "Author first name",            // String  
+   "dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date  
+   "dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date  
+}  
 
 =====================
 # POST read one Author
-url: /authors
-body:
-{
-    "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)
-}
+url: /authors  
+body:  
+{  
+   "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
+}  
 
 =====================
 # POST read all Author
-url: /authors
-body:
+url: /authors  
+body:  
 
 ===================
 # POST update Author
-url: /authors/update
-body:
-{
-    "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)
-
-    // all fields below are optional
-    "firstName": "Author first name",           // String
-    "lastName": "Author first name",            // String
-    "dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date
-    "dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date
+url: /authors/update  
+body:  
+{  
+   "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
+  
+   // all fields below are optional  
+   "firstName": "Author first name",           // String  
+   "lastName": "Author first name",            // String  
+   "dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date  
+   "dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date  
 }
 
 ==================
 # POST delete Author
-url: /authors/delete
-body:
-{
-    "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)
-}
+url: /authors/delete  
+body:  
+{  
+    "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
+}  
 
 
 ===================
