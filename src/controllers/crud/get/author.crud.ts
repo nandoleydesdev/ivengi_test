@@ -1,10 +1,12 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import Book from '@/models/book/book.model';
-import Author from '@/models/book/book.model';
+import Author from '@/models/author/author.model';
 import getString from '@/utils/strings';
 import notFound from '@/utils/notfound';
 import async from 'async';
+
+let action: string;     // C, R, U, D?
 
 export const authorCreate = (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({
@@ -15,87 +17,74 @@ export const authorCreate = (req: Request, res: Response, next: NextFunction) =>
 
 export const authorRead = (req: Request, res: Response, next: NextFunction) => {
 
-    let action: string;
-
     // Get one specific Author, or an array of all Authors
-    let readOne: boolean = undefined !== req.params.id && 0 < req.params.id.length,
-        readAll: boolean = !readOne;
+    let readOne: boolean = undefined !== req.params.id && 0 < req.params.id.length;
+
+    if (readOne) doReadOne(req, res, next);
+    else doReadAll(req, res, next);
+};
+
+const doReadOne = (req: Request, res: Response, next: NextFunction) => {
+
+    action = getString('ACTION_AUTHOR_READ_ONE');
 
     // If req.params.id is an invalid ObjectId, create new ObjectId to prevent error. This ObjectId will have no query results.
-    let searchId: string | mongoose.Types.ObjectId = readOne && mongoose.isValidObjectId(req.params.id) ? req.params.id : new mongoose.Types.ObjectId();
+    let searchId: string | mongoose.Types.ObjectId = mongoose.isValidObjectId(req.params.id) ? req.params.id : new mongoose.Types.ObjectId();
 
     // Async query functions
     async.parallel({
         author(callback) {
-            if (readOne) {
-                Author.findById(searchId)
-                      .exec(callback);
-            }
-            else callback();
+            Author.findById(searchId)
+                  .exec(callback);
         },
         author_books(callback) {
-            if (readOne) {
-                Book.find({ author: searchId }, 'title summary')
-                    .sort({ title: 'ascending' })
-                    .exec(callback);
-            }
-            else callback();
-        },
-        authors(callback) {
-            Author.find()
-                  .exec(callback);
+            Book.find({ author: searchId }, 'title summary')
+                .sort({ title: 'ascending' })
+                .exec(callback);
         }
     },
 
     // Callback function, to run when all async query functions are finished
     (err: unknown, results) => {
 
-        // Check for error
+        // Check for error and Author not found
         if (err) return next(err);
+        if (notFound(results.author, 'author', res, action)) return;
 
-        // Get one specific Author
-        if (readOne) {
+        // Add list of books to Author result
+        let thisAuthor = JSON.parse(JSON.stringify(results.author));
+        thisAuthor.books = results.author_books;
 
-            action = getString('ACTION_AUTHOR_READ_ONE');
-
-            // Check if Author is found
-            if (notFound(results.author, 'author', res, action)) return;
-
-            // Add list of books to Author result
-            let thisAuthor = JSON.parse(JSON.stringify(results.author));
-            thisAuthor.books = results.author_books;
-
-            // Success
-            res.status(200).json({
-                action: action,
-                type: getString('SUCCESS'),
-                result: thisAuthor
-            });
-        }
-
-        // Get an array of all Authors
-        else if (readAll) {
-
-            console.log("HIERO");
-
-            action = getString('ACTION_AUTHOR_READ_ALL');
-
-            let numberOfAuthors: number = !results.authors ? 0 : Object.values(results.authors).length;
-
-            // Check for Books are found and error
-            if (notFound(numberOfAuthors, 'authors', res, action)) return;
-            if (err) return next(err);
-
-            // Success
-            res.status(200).json({
-                action: action,
-                type: getString('SUCCESS_RESULTS').replace('%NUMBER%', numberOfAuthors.toString())
-                                                  .replace('%OBJECTS%', 'Authors'),
-                result: results.authors
-            });
-        }
+        // Success
+        res.status(200).json({
+            action: action,
+            message: getString('SUCCESS'),
+            result: thisAuthor
+        });
     });
-};
+}
+
+const doReadAll = (req: Request, res: Response, next: NextFunction) => {
+
+    action = getString('ACTION_AUTHOR_READ_ALL');
+
+    Author.find()
+          .exec((err: unknown, allAuthors) => {
+                let numberOfAuthors: number = Object.values(allAuthors).length;
+
+                // Check for Books are found and error
+                if (notFound(numberOfAuthors, 'authors', res, action)) return;
+                if (err) return next(err);
+
+                // Success
+                res.status(200).json({
+                    action: action,
+                    message: getString('SUCCESS_RESULTS').replace('%NUMBER%', numberOfAuthors.toString())
+                                                         .replace('%OBJECTS%', 'Authors'),
+                    result: allAuthors
+                });
+            });
+}
 
 export const authorUpdate = (req: Request, res: Response, next: NextFunction) => {
     res.status(200).json({

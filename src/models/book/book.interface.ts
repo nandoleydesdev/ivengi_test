@@ -5,10 +5,7 @@ interface IBook extends Document {
     title: String,
     summary: String,
     ISBN: String, // format: 978-94-92182-71-5 or 978 94 92182 71 5
-    // editions: [{
-    //     version: Number,
-    //     publicationDate: Date
-    // }],
+    editions: Array<IEdition>,
     author: Schema.Types.ObjectId
 }
 
