@@ -3,20 +3,20 @@ Create, read, update and delete Books and Authors with this basic REST API.
 
 ===================
 # POST create Book
-url: /books/create
-body:
-{
-    "title": "Book title",
-    "summary": "Book summary",
-    "ISBN": "Book ISBN number",
-    "editions": [
-    {
-        version: 1,
-        publicationDate: "2023-01-18T00:00:00.000Z"
-    }
-    ],
-    "author": "63c53e26ab0a0541335797e9"
-}
+url: /books/create  
+body:  
+{  
+    "title": "Book title",  
+    "summary": "Book summary",  
+    "ISBN": "Book ISBN number",  
+    "editions": [  
+        {  
+            version: 1,  
+            publicationDate: "2023-01-18T00:00:00.000Z"  
+        }  
+    ],  
+    "author": "63c53e26ab0a0541335797e9"  
+}  
 
 =====================
 # POST read one Book
