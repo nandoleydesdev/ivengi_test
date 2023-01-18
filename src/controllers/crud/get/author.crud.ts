@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import mongoose from 'mongoose';
 import Book from '@/models/book/book.model';
-import Author from '@/models/book/book.model';
+import Author from '@/models/author/author.model';
 import getString from '@/utils/strings';
 import notFound from '@/utils/notfound';
 import async from 'async';
@@ -27,19 +27,13 @@ export const authorRead = (req: Request, res: Response, next: NextFunction) => {
     // Async query functions
     async.parallel({
         author(callback) {
-            if (readOne) {
-                Author.findById(searchId)
-                      .exec(callback);
-            }
-            else callback();
+            Author.findById(searchId)
+                  .exec(callback);
         },
         author_books(callback) {
-            if (readOne) {
-                Book.find({ author: searchId }, 'title summary')
-                    .sort({ title: 'ascending' })
-                    .exec(callback);
-            }
-            else callback();
+            Book.find({ author: searchId }, 'title summary')
+                .sort({ title: 'ascending' })
+                .exec(callback);
         },
         authors(callback) {
             Author.find()
@@ -75,8 +69,6 @@ export const authorRead = (req: Request, res: Response, next: NextFunction) => {
 
         // Get an array of all Authors
         else if (readAll) {
-
-            console.log("HIERO");
 
             action = getString('ACTION_AUTHOR_READ_ALL');
 
