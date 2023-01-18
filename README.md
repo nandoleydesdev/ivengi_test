@@ -6,16 +6,16 @@ Create, read, update and delete Books and Authors with this basic REST API.
 url: /books/create
 body:
 {
-    "title": "Book title",        // String
-    "summary": "Book summary",    // String
-    "ISBN": "Book ISBN number",   // String
+    "title": "Book title",
+    "summary": "Book summary",
+    "ISBN": "Book ISBN number",
     "editions": [
     {
-        version: 1,                                 // Number
-        publicationDate: "2023-01-18T00:00:00.000Z" // Date
+        version: 1,
+        publicationDate: "2023-01-18T00:00:00.000Z"
     }
     ],
-    "author": "63c53e26ab0a0541335797e9", // String (Author ObjectId)
+    "author": "63c53e26ab0a0541335797e9"
 }
 
 =====================
