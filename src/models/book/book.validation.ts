@@ -8,7 +8,7 @@ const editions = Joi.object().keys({
 const book = Joi.object({
     title: Joi.string()
         .min(2)
-        .max(30)
+        .max(90)
         .required(),
 
     summary: Joi.string().required(),
