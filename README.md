@@ -6,16 +6,16 @@ Create, read, update and delete Books and Authors with this basic REST API.
 url: /books/create  
 body:  
 {  
-   "title": "Book title",  
-   "summary": "Book summary",  
-   "ISBN": "Book ISBN number",  
-   "editions": [  
-      {  
-         version: 1,  
-         publicationDate: "2023-01-18T00:00:00.000Z"  
-      }  
-   ],  
-   "author": "63c53e26ab0a0541335797e9"  
+&nbsp;&nbsp;&nbsp;"title": "Book title", // String  
+&nbsp;&nbsp;&nbsp;"summary": "Book summary",  // String  
+&nbsp;&nbsp;&nbsp;"ISBN": "Book ISBN number", // String   
+&nbsp;&nbsp;&nbsp;"editions": [  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version: 1,  // Number  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;publicationDate: "2023-01-18T00:00:00.000Z"  // Date  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  
+&nbsp;&nbsp;&nbsp;&nbsp;],  
+&nbsp;&nbsp;"author": "63c53e26ab0a0541335797e9"  // String (ObjectId)  
 }  
 
 =====================
@@ -23,7 +23,7 @@ body:
 url: /books  
 body:  
 {  
-    "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
+&nbsp;&nbsp;&nbsp;"id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
 }  
 
 =====================
@@ -36,19 +36,19 @@ body:
 url: /books/update
 body:  
 {  
-   "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
+&nbsp;&nbsp;&nbsp;"id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
   
-   // all fields below are optional  
-   "title": "Book title",        // String  
-   "summary": "Book summary",    // String  
-   "ISBN": "Book ISBN number",   // String  
-   "editions": [  
-      {  
-         version: 1,                                 // Number  
-         publicationDate: "2023-01-18T00:00:00.000Z" // Date  
-      }  
-   ],  
-   "author": "63c53e26ab0a0541335797e9", // String (Author ObjectId)  
+&nbsp;&nbsp;&nbsp;// all fields below are optional  
+&nbsp;&nbsp;&nbsp;"title": "Book title",        // String  
+&nbsp;&nbsp;&nbsp;"summary": "Book summary",    // String  
+&nbsp;&nbsp;&nbsp;"ISBN": "Book ISBN number",   // String  
+&nbsp;&nbsp;&nbsp;"editions": [  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;version: 1,                                 // Number  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;publicationDate: "2023-01-18T00:00:00.000Z" // Date  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}  
+&nbsp;&nbsp;&nbsp;],  
+&nbsp;&nbsp;&nbsp;"author": "63c53e26ab0a0541335797e9", // String (Author ObjectId)  
 }
 
 ==================
@@ -56,7 +56,7 @@ body:
 url: /books/delete  
 body:  
 {  
-   "id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
+&nbsp;&nbsp;&nbsp;"id": "63c7f1d001126c76d8f3dee1", // String (Book ObjectId)  
 }  
 
 
@@ -87,10 +87,10 @@ url: /books/(ObjectId)/delete // Not yet implemented
 url: /authors/create  
 body:  
 {  
-   "firstName": "Author first name",           // String  
-   "lastName": "Author first name",            // String  
-   "dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date  
-   "dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date  
+&nbsp;&nbsp;&nbsp;"firstName": "Author first name",           // String  
+&nbsp;&nbsp;&nbsp;"lastName": "Author first name",            // String  
+&nbsp;&nbsp;&nbsp;"dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date  
+&nbsp;&nbsp;&nbsp;"dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date  
 }  
 
 =====================
@@ -98,7 +98,7 @@ body:
 url: /authors  
 body:  
 {  
-   "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
+&nbsp;&nbsp;&nbsp;"id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
 }  
 
 =====================
@@ -111,13 +111,13 @@ body:
 url: /authors/update  
 body:  
 {  
-   "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
+&nbsp;&nbsp;&nbsp;"id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
   
-   // all fields below are optional  
-   "firstName": "Author first name",           // String  
-   "lastName": "Author first name",            // String  
-   "dateOfBirth": "1932-01-18T00:00:00.000Z",  // Date  
-   "dateOfBirth": "1998-01-18T00:00:00.000Z"   // Date  
+&nbsp;&nbsp;&nbsp;// all fields below are optional  
+&nbsp;&nbsp;&nbsp;"firstName": "Author first name", // String  
+&nbsp;&nbsp;&nbsp;"lastName": "Author first name", // String  
+&nbsp;&nbsp;&nbsp;"dateOfBirth": "1932-01-18T00:00:00.000Z", // Date  
+&nbsp;&nbsp;&nbsp;"dateOfBirth": "1998-01-18T00:00:00.000Z" // Date  
 }
 
 ==================
@@ -125,7 +125,7 @@ body:
 url: /authors/delete  
 body:  
 {  
-    "id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
+&nbsp;&nbsp;&nbsp;"id": "63c53e26ab0a0541335797e9", // String (Book ObjectId)  
 }  
 
 
