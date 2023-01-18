@@ -1,4 +1,4 @@
-interface IEdition {
+interface IEdition extends Document {
     version: number,
     publicationDate: Date
 }
