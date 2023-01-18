@@ -9,8 +9,7 @@ const notFound = (found: any, str: string, res: Response, action: string): Boole
     if (noResult || noResults) {
         res.status(404).json({
             action: action,
-            type: getString('ERROR'),
-            result: getString(`RESULT_NO_${str.toUpperCase()}`)
+            message: getString(`RESULT_NO_${str.toUpperCase()}`)
         });
 
         notFound = true;

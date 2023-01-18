@@ -26,8 +26,7 @@ export const bookCreate = (req: Request, res: Response, next: NextFunction) => {
             if (foundBook) {
                 return res.status(400).json({
                     action: action,
-                    type: getString('ERROR'),
-                    result: getString('RESULT_DUPLICATE').replace('%OBJECT%', `"${foundBook.title}"`)
+                    message: getString('RESULT_DUPLICATE').replace('%OBJECT%', `"${foundBook.title}"`)
                                                          .replace('%ID%', foundBook._id)
                 });
             }
@@ -50,7 +49,7 @@ export const bookCreate = (req: Request, res: Response, next: NextFunction) => {
                 // Success
                 res.status(200).json({
                     action: action,
-                    type: getString('SUCCESS'),
+                    message: getString('SUCCESS'),
                     result: newBook
                 });
             });
@@ -60,58 +59,59 @@ export const bookCreate = (req: Request, res: Response, next: NextFunction) => {
 export const bookRead = (req: Request, res: Response, next: NextFunction) => {
 
     // Get one specific Book, or an array of all Books
-    let readOne: boolean = undefined !== req.body.id && 0 < req.body.id.length,
-        readAll: boolean = !readOne;
+    let readOne: boolean = undefined !== req.body.id && 0 < req.body.id.length;
+
+    if (readOne) doReadOne(req, res, next);
+    else doReadAll(req, res, next);
+};
+
+const doReadOne = (req: Request, res: Response, next: NextFunction) => {
+
+    action = getString('ACTION_BOOK_READ_ONE');
 
     // If req.body.id is an invalid ObjectId, create new ObjectId to prevent error. This ObjectId will have no query results.
     let searchId: string | mongoose.Types.ObjectId = mongoose.isValidObjectId(req.body.id) ? req.body.id : new mongoose.Types.ObjectId();
 
-    // Get one specific Book
-    if (readOne)
-    {
-        action = getString('ACTION_BOOK_READ_ONE');
+    Book.findById(searchId)
+        .populate('author')
+        .exec((err: unknown, foundBook) => {
 
-        Book.findById(searchId)
-            .populate('author')
-            .exec((err: unknown, foundBook) => {
+        // Check for Book is found and error
+        if (notFound(foundBook, 'book', res, action)) return;
+        if (err) return next(err);
 
-            // Check for Book is found and error
-            if (notFound(foundBook, 'book', res, action)) return;
+        // Return success message
+        res.status(200).json({
+            action: action,
+            result: getString('SUCCESS'),
+            book: foundBook
+        });
+    });
+}
+
+const doReadAll = (req: Request, res: Response, next: NextFunction) => {
+
+    action = getString('ACTION_BOOK_READ_ALL');
+
+    Book.find()
+        .populate('author')
+        .exec((err: unknown, allBooks) => {
+
+            let numberOfBooks: number = Object.values(allBooks).length;
+
+            // Check for Books are found and error
+            if (notFound(numberOfBooks, 'books', res, action)) return;
             if (err) return next(err);
 
-            // Return success message
+            // Success
             res.status(200).json({
                 action: action,
-                result: getString('SUCCESS'),
-                book: foundBook
+                message: getString('SUCCESS_RESULTS').replace('%NUMBER%', numberOfBooks.toString())
+                                                  .replace('%OBJECTS%', 'Books'),
+                result: allBooks
             });
         });
-    }
-
-    // Get an array of all Books
-    else if (readAll) {
-        action = getString('ACTION_BOOK_READ_ALL');
-
-        Book.find()
-            .populate('author')
-            .exec((err: unknown, allBooks) => {
-
-                let numberOfBooks: number = Object.values(allBooks).length;
-
-                // Check for Books are found and error
-                if (notFound(numberOfBooks, 'books', res, action)) return;
-                if (err) return next(err);
-
-                // Success
-                res.status(200).json({
-                    action: action,
-                    type: getString('SUCCESS_RESULTS').replace('%NUMBER%', numberOfBooks.toString())
-                                                      .replace('%OBJECTS%', 'Books'),
-                    result: allBooks
-                });
-            });
-    }
-};
+}
 
 export const bookUpdate = (req: Request, res: Response, next: NextFunction) => {
 
