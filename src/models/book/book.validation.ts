@@ -2,7 +2,7 @@ import Joi from 'joi';
 
 const editions = Joi.object().keys({
     version: Joi.number().required(),
-    publicationDate: Joi.date().required
+    publicationDate: Joi.date().required()
 });
 
 const book = Joi.object({
@@ -13,7 +13,7 @@ const book = Joi.object({
 
     summary: Joi.string().required(),
     ISBN: Joi.string().required(),
-    // editions: Joi.array().items(editions),
+    editions: Joi.array().items(editions),
     author: Joi.string().required()
 });
 

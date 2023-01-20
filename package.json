@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
-    "dev": "nodemon src/index.ts",
-    "dev2": "tsc-watch --onSuccess \"node ./dist/index.js\"",
+    "nodemon": "nodemon src/index.ts",
+    "tsc": "tsc-watch --onSuccess \"node ./dist/index.js\"",
     "build": "tsc"
   },
   "keywords": [],

@@ -26,10 +26,7 @@ const BookSchema = new Schema<IBook>({
         type: String,
         required: true
     },
-    editions: {
-        type: [EditionSchema],
-        default: undefined
-    },
+    editions: [EditionSchema],
     author: {
         type: Schema.Types.ObjectId,
         ref: "Author",

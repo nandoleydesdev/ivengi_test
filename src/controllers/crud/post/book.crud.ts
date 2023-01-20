@@ -35,7 +35,6 @@ export const bookCreate = (req: Request, res: Response, next: NextFunction) => {
                 title: req.body.title,
                 summary: req.body.summary,
                 ISBN: req.body.ISBN,
-                testField: req.body.testField,
                 editions: req.body.editions,
                 author: req.body.author
             });
