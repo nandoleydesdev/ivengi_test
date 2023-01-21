@@ -68,17 +68,17 @@ const doReadOne = (req: Request, res: Response, next: NextFunction) => {
 
     action = getString('ACTION_AUTHOR_READ_ONE');
 
-    // If req.body.id is an invalid ObjectId, create new ObjectId to prevent error. This ObjectId will have no query results.
-    let searchId: string | mongoose.Types.ObjectId = mongoose.isValidObjectId(req.body.id) ? req.body.id : new mongoose.Types.ObjectId();
+    // If req.body.id is an invalid ObjectId, return 'not found' message.
+    if (!mongoose.isValidObjectId(req.body.id) && notFound(0, 'author', res, action)) return;
 
     // Async query functions
     async.parallel({
         author(callback) {
-            Author.findById(searchId)
+            Author.findById(req.body.id)
                     .exec(callback);
         },
         author_books(callback) {
-            Book.find({ author: searchId }, 'title summary')
+            Book.find({ author: req.body.id }, 'title summary')
                 .sort({ title: 'ascending' })
                 .exec(callback);
         }

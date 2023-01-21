@@ -68,10 +68,10 @@ const doReadOne = (req: Request, res: Response, next: NextFunction) => {
 
     action = getString('ACTION_BOOK_READ_ONE');
 
-    // If req.body.id is an invalid ObjectId, create new ObjectId to prevent error. This ObjectId will have no query results.
-    let searchId: string | mongoose.Types.ObjectId = mongoose.isValidObjectId(req.body.id) ? req.body.id : new mongoose.Types.ObjectId();
+    // If req.body.id is an invalid ObjectId, return 'not found' message.
+    if (!mongoose.isValidObjectId(req.body.id) && notFound(0, 'book', res, action)) return;
 
-    Book.findById(searchId)
+    Book.findById(req.body.id)
         .populate('author')
         .exec((err: unknown, foundBook) => {
 
