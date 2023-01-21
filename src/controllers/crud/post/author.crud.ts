@@ -5,6 +5,7 @@ import notFound from '@/utils/notfound';
 import Author from '@/models/author/author.model';
 import Book from '@/models/book/book.model';
 import IAuthor from '@/models/author/author.interface';
+import IBook from '@/models/book/book.interface';
 import async from 'async';
 
 let action: string;     // C, R, U, D?
@@ -92,14 +93,14 @@ const doReadOne = (req: Request, res: Response, next: NextFunction) => {
         if (notFound(results.author, 'author', res, action)) return;
 
         // Add list of books to Author result
-        let thisAuthor = JSON.parse(JSON.stringify(results.author));
-        thisAuthor.books = results.author_books;
+        let author: IAuthor = results.author as IAuthor;
+        author.books = results.author_books as IBook[];
 
         // Success
         res.status(200).json({
             action: action,
             message: getString('SUCCESS'),
-            result: thisAuthor
+            result: author
         });
     });
 }

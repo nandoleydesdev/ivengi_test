@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import IAuthor from './author.interface';
+import IBook from '@/models/book/book.interface';
 
 const AuthorSchema = new Schema<IAuthor>({
     firstName: {
@@ -17,7 +18,8 @@ const AuthorSchema = new Schema<IAuthor>({
     dateOfDeath: {
         type: Date,
         required: false
-    }
+    },
+    books: [] as IBook[]
 }, {
     toJSON: { virtuals: true }
 });
