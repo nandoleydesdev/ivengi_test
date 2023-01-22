@@ -26,6 +26,8 @@ const getString = (name: string): string => {
 
         case 'GET_NOT_IMPLEMENTED': return 'NOT YET IMPLEMENTED - this GET request will be used for creating user input form';
 
+        case 'PAGE_INDEX_TITLE':    return 'Books and Authors';
+
         default: return '';
     }
 

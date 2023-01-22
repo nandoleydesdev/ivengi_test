@@ -1,5 +1,7 @@
 import express, { Application } from 'express';
 import mongoose from 'mongoose';
+import path from "path";
+import indexRouter from './routers/index.router';
 import bookRouter from './routers/book.router';
 import authorRouter from './routers/author.router';
 
@@ -13,6 +15,7 @@ class App {
 
         this.initDatabaseConnection();
         this.initMiddleware();
+        this.initViews();
         this.initRouters();
     }
 
@@ -28,7 +31,13 @@ class App {
         this.app.use(express.urlencoded({extended: false}));
     }
 
+    private initViews(): void {
+        this.app.set( "views", path.join( __dirname, "views" ) );
+        this.app.set( "view engine", "ejs" );
+    }
+
     private initRouters(): void {
+        this.app.use('/', indexRouter);
         this.app.use('/books', bookRouter);
         this.app.use('/authors', authorRouter);
     }
