@@ -1,4 +1,5 @@
 import express, { Application } from 'express';
+import expressLayouts from 'express-ejs-layouts';
 import mongoose from 'mongoose';
 import path from "path";
 import indexRouter from './routers/index.router';
@@ -32,6 +33,8 @@ class App {
     }
 
     private initViews(): void {
+        this.app.use(expressLayouts)
+        this.app.set('layout', './layouts/full-width')
         this.app.set( "views", path.join( __dirname, "views" ) );
         this.app.set( "view engine", "ejs" );
     }

@@ -22,7 +22,7 @@ export const bookRead = (req: Request, res: Response, next: NextFunction) => {
     else doReadAll(req, res, next);
 };
 
-const doReadOne = (req: Request, res: Response, next: NextFunction) => {
+const doReadOne = (req: Request, res: Response, next: NextFunction, doRender: boolean = false) => {
 
     action = getString('ACTION_BOOK_READ_ONE');
 
@@ -37,12 +37,21 @@ const doReadOne = (req: Request, res: Response, next: NextFunction) => {
         if (notFound(foundBook, 'book', res, action)) return;
         if (err) return next(err);
 
-        // Return success message
-        res.status(200).json({
-            action: action,
-            result: getString('SUCCESS'),
-            book: foundBook
-        });
+        if (doRender) {
+            // Return success message json
+            res.status(200).json({
+                action: action,
+                result: getString('SUCCESS'),
+                book: foundBook
+            });
+        }
+        else {
+            // Render book page
+            res.status(200).render('pages/index', {
+                title: 'It works',
+                book: foundBook
+            });
+        }
     });
 }
 
